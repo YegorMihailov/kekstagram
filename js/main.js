@@ -5,5 +5,6 @@
 
 import {getPictures} from './data.js';
 import {renderMiniatures} from './miniatures.js';
+import {renderImageForm} from './form.js';
 
 renderMiniatures(getPictures());
