@@ -6,5 +6,7 @@
 import {getPictures} from './data.js';
 import {renderMiniatures} from './miniatures.js';
 import {renderImageForm} from './form.js';
+import { setScale } from './scale.js';
 
 renderMiniatures(getPictures());
+setScale();
