@@ -5,7 +5,6 @@ const commentLines = [
   'Бормалёк.',
   'Вот это тачилла!',
   'Ну такое...',
-  'Вот это бубсы!',
   'Да есть же!',
   'Одного дня!',
   'Всё отлично!',
@@ -54,7 +53,7 @@ const createPicture = (index) => {
     url: `photos/${index}.jpg`,
     description: getRandomArrayElement(descriptions),
     likes: getRandomNumber(15, 200),
-    comments: Array.from({length: getRandomNumber(0, 6)}, (_, commentIndex) => createComment(commentIndex + 1)),
+    comments: Array.from({length: getRandomNumber(0, 20)}, (_, commentIndex) => createComment(commentIndex + 1)),
   };
 };
 

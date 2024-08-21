@@ -516,6 +516,22 @@ main {
   background-color: #ffffff;
 }
 
+.img-upload__scale-25 {
+  transform: scale(0.25);
+}
+
+.img-upload__scale-50 {
+  transform: scale(0.5);
+}
+
+.img-upload__scale-75 {
+  transform: scale(0.75);
+}
+
+.img-upload__scale-100 {
+  transform: scale(1);
+}
+
 .img-upload__preview img {
   display: block;
   max-width: 600px;

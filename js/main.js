@@ -3,7 +3,8 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-console */
 
-import {getPictures} from './data.js';
-import {renderMiniatures} from './miniatures.js';
+import { getPictures } from './data.js';
+import { renderMiniatures } from './miniatures.js';
+import { renderImageForm } from './form.js';
 
 renderMiniatures(getPictures());
