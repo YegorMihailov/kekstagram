@@ -1,5 +1,8 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable no-console */
+import { scaleImage } from './scale.js';
+import { resetEffects } from './effects.js';
+
 const form = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('#upload-file');
 const tagInput = document.querySelector('.text__hashtags');
@@ -28,14 +31,20 @@ const hideImageForm = () => {
   // tagInput.removeEventListener('change', validateForm);
   // form.removeEventListener('submit', );
 
+  resetEffects();
+  scaleImage(100);
+
   uploadInput.value = '';
   tagInput.value = '';
   commentInput.value = '';
+
+  // scaleImage();
 };
 
 const renderImageForm = () => {
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
+  scaleImage(100);
 
   document.addEventListener('keydown', onEscKeyDown);
   cancelButton.addEventListener('click', onCancelButtonClick);

@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
+
 const fullPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
 const cancelButton = document.querySelector('.big-picture__cancel');
 const commentsCount = document.querySelector('.comments-count');
 const commentsCurrentCount = document.querySelector('.comments-current-count');
 const commentsLoader = document.querySelector('.comments-loader');
+let commentsLessFlag = false;
 
 const createComment = ({avatar, message, name}) => {
   const comment = document.createElement('li');
@@ -28,6 +30,10 @@ const renderComments = (comments) => {
 
   if (comments.length < 5) {
     commentsCurrentCount.textContent = comments.length;
+    commentsCurrentCountValue = comments.length;
+    commentsLessFlag = true;
+    console.log(comments.length);
+    console.log(comments);
   } else {
     commentsCurrentCount.textContent = commentsCurrentCountValue;
   }
@@ -42,6 +48,8 @@ const renderComments = (comments) => {
 
   if (comments.length > 5) {
     comments.splice(0, 5);
+  } else {
+    comments.length = 0;
   }
 
   commentsLoader.addEventListener('click', () => {
@@ -51,7 +59,10 @@ const renderComments = (comments) => {
         const commentElement = createComment(comment);
         commentsFragment.append(commentElement);
         commentsCounter++;
-        commentsCurrentCountValue++;
+        if (!commentsLessFlag) {
+          commentsCurrentCountValue++;
+        }
+
       }
     });
     commentsCurrentCount.textContent = commentsCurrentCountValue;
@@ -90,10 +101,11 @@ function onCancelButtonClick () {
 const renderFullImage = (data) => {
   fullPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  // commentCount.classList.add('hidden');
+
 
   createFullPicture(data);
   renderComments(data.comments);
+  console.log(data.comments);
 
   document.addEventListener('keydown', onEscKeyDown);
   cancelButton.addEventListener('click', onCancelButtonClick);
