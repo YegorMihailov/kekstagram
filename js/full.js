@@ -6,7 +6,7 @@ const cancelButton = document.querySelector('.big-picture__cancel');
 const commentsCount = document.querySelector('.comments-count');
 const commentsCurrentCount = document.querySelector('.comments-current-count');
 const commentsLoader = document.querySelector('.comments-loader');
-let commentsLessFlag = false;
+// let commentsLessFlag = false;
 
 const createComment = ({avatar, message, name}) => {
   const comment = document.createElement('li');
@@ -28,14 +28,15 @@ const renderComments = (comments) => {
   commentsList.innerHTML = '';
   commentsCount.textContent = comments.length;
 
-  if (comments.length < 5) {
+  if (comments.length <= 5) {
     commentsCurrentCount.textContent = comments.length;
     commentsCurrentCountValue = comments.length;
     commentsLessFlag = true;
-    console.log(comments.length);
-    console.log(comments);
+    commentsLoader.classList.add('hidden');
+    console.log('f', comments.length);
   } else {
     commentsCurrentCount.textContent = commentsCurrentCountValue;
+    commentsLoader.classList.remove('hidden');
   }
 
   comments.forEach((comment) => {
@@ -58,16 +59,19 @@ const renderComments = (comments) => {
       if (commentsCounter < 5) {
         const commentElement = createComment(comment);
         commentsFragment.append(commentElement);
-        commentsCounter++;
-        if (!commentsLessFlag) {
-          commentsCurrentCountValue++;
-        }
-
+        commentsCurrentCountValue++;
       }
+      commentsCounter++;
     });
+
     commentsCurrentCount.textContent = commentsCurrentCountValue;
+
     commentsList.append(commentsFragment);
+
     comments.splice(0, 5);
+    if (comments.length === 0) {
+      commentsLoader.classList.add('hidden');
+    }
   });
 
   commentsList.append(commentsFragment);
@@ -105,7 +109,7 @@ const renderFullImage = (data) => {
 
   createFullPicture(data);
   renderComments(data.comments);
-  console.log(data.comments);
+  // console.log(data.comments);
 
   document.addEventListener('keydown', onEscKeyDown);
   cancelButton.addEventListener('click', onCancelButtonClick);
