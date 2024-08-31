@@ -2,6 +2,8 @@
 /* eslint-disable no-console */
 import { scaleImage } from './scale.js';
 import { resetEffects } from './effects.js';
+import { sendData } from './api.js';
+import { showAlert } from './util.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('#upload-file');
@@ -9,6 +11,7 @@ const tagInput = document.querySelector('.text__hashtags');
 const commentInput  =document.querySelector('.text__description');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const cancelButton = document.querySelector('#upload-cancel');
+const submitButton = document.querySelector('.img-upload__submit');
 // const tagError = document.querySelector('.img-upload__error');
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const body = document.querySelector('body');
@@ -94,9 +97,35 @@ function onCancelButtonClick () {
 
 // DRY !!!
 
-const onFormSubmit = (evt) => {
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Отправляю...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const onSendDataSuccess = (successMessage) => {
+  hideImageForm();
+  showAlert(successMessage, true);
+};
+
+const onSendDataError = (error) => {
+  showAlert(error, false);
+};
+
+const onFormSubmit = async (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  const isValid = pristine.validate();
+
+  if (isValid) {
+    blockSubmitButton();
+    await sendData(onSendDataSuccess, onSendDataError, new FormData(form));
+    unblockSubmitButton();
+  }
+
 };
 
 uploadInput.addEventListener('change', () => {
